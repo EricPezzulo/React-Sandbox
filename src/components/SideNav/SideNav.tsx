@@ -1,4 +1,4 @@
-import { ChildCare, FlightClass, Home } from "@mui/icons-material";
+import { CalculateOutlined, ChildCare, FlightClass, Home } from "@mui/icons-material";
 import SideNavItem from "./SideNavItem";
 import { useState } from "react";
 
@@ -7,9 +7,10 @@ const SideNav = () => {
     { path: "/", title: "Home", icon: <Home /> },
     { path: "/child", title: "Child", icon: <ChildCare /> },
     { path: "/firstRoute", title: "First Route", icon: <FlightClass /> },
+    { path: "/split-calculator", title: "Payment Split Calculator", icon: <CalculateOutlined /> },
   ]);
   return (
-    <nav className="flex min-h-0 w-64 flex-shrink-0 flex-col border-r border-slate-300 bg-slate-100">
+    <nav className="hidden sm:flex min-h-0 w-64 flex-shrink-0 flex-col border-r border-slate-300 bg-slate-100">
       <div className="flex-1 overflow-hidden">
         {siteMap.map((location, index) => (
           <SideNavItem
