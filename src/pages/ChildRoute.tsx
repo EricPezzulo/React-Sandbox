@@ -1,5 +1,5 @@
 const ChildRoute = () => {
-  return <div>child route</div>;
+  return <div className="p-5">Child route</div>;
 };
 
 export default ChildRoute;

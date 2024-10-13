@@ -1,5 +1,5 @@
 const HomeRoute = () => {
-  return <div>Home</div>;
+  return <div className="p-5">Home</div>;
 };
 
 export default HomeRoute;

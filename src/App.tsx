@@ -1,10 +1,10 @@
-import { Outlet, useLocation } from 'react-router-dom';
-import BasePage from './layouts/BasePage';
-import HomeRoute from './pages/HomeRoute';
+import { Outlet, useLocation } from "react-router-dom";
+import BasePage from "./layouts/BasePage";
+import HomeRoute from "./pages/HomeRoute";
 
 function App() {
   const location = useLocation();
-  const isHome = location.pathname === '/';
+  const isHome = location.pathname === "/";
 
   if (isHome) {
     return (

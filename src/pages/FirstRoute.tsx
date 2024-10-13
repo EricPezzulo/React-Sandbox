@@ -1,5 +1,5 @@
 const FirstRoute = () => {
-  return <div>route 1</div>;
+  return <div className="p-5">First Route</div>;
 };
 
 export default FirstRoute;
