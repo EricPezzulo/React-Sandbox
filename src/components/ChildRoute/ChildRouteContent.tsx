@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import DialogComponent from "../common/Dialog";
 
@@ -17,6 +17,9 @@ const ChildRouteContent = () => {
         </Grid>{" "}
         <Grid container alignItems={"center"} justifyContent={"center"}>
           <DialogComponent />
+        </Grid>
+        <Grid>
+          <Typography>Test</Typography>
         </Grid>
       </Grid>
     </Grid>
