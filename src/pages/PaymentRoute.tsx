@@ -13,7 +13,8 @@ const PaymentRoute = () => {
         spacing={2}
         sx={{
           bgcolor: "#FEFEFE",
-          width: { xs: "80%", md: "50%" },
+          width: { xs: "80%", md: "80%" },
+          maxWidth: "800px",
           padding: 2,
           borderRadius: 2,
           boxShadow: "0 0 10px 0px rgba(0,0,0,0.2)",
