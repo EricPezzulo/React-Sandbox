@@ -1,8 +1,12 @@
-import { Button, Typography } from "@mui/material";
+import { Button } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import DialogComponent from "../common/Dialog";
+import { useContext } from "react";
+import { AppContext } from "../../contexts/AppState";
 
 const ChildRouteContent = () => {
+  const { regions } = useContext(AppContext);
+  console.log(regions);
   return (
     <Grid container alignItems={"center"} justifyContent={"center"}>
       <Grid container spacing={2}>
@@ -18,10 +22,16 @@ const ChildRouteContent = () => {
         <Grid container alignItems={"center"} justifyContent={"center"}>
           <DialogComponent />
         </Grid>
-        <Grid>
-          <Typography>Test</Typography>
-        </Grid>
       </Grid>
+      {regions.map((r, i) => (
+        <div
+          className="m-2 rounded bg-slate-100 p-2 text-center font-inter"
+          key={i}
+        >
+          <p>{r.displayName}</p>
+          <p>{r.nameserver}</p>
+        </div>
+      ))}
     </Grid>
   );
 };

@@ -1,47 +1,44 @@
 import { createContext, ReactNode, useState } from "react";
 
 interface AppContextProps {
-    firstName: string;
-    setFirstName: React.Dispatch<React.SetStateAction<string>>;
-    routePath: string;
-    value: object
+  firstName: string;
+  setFirstName: React.Dispatch<React.SetStateAction<string>>;
+  routePath: string;
+  regions: Regions[];
+  setRegions: React.Dispatch<React.SetStateAction<Regions[]>>;
 }
 interface AppProviderProps {
-    children: ReactNode;
+  children: ReactNode;
+}
+export interface Regions {
+  nameserver: string;
+  displayName: string;
 }
 
 export const AppContext = createContext<AppContextProps>({
-    firstName: '',
-    setFirstName: () => { },
-    routePath: '',
-    value: {
-        first: '',
-        second: '',
-        third: ''
-    }
-})
+  firstName: "",
+  setFirstName: () => {},
+  routePath: "",
+  regions: [],
+  setRegions: () => {},
+});
 
-export function AppProvider({
-    children,
-}: AppProviderProps) {
-    const [firstName, setFirstName] = useState<string>('')
+export function AppProvider({ children }: AppProviderProps) {
+  const [firstName, setFirstName] = useState<string>("");
+  const [regions, setRegions] = useState<Regions[]>([]);
+  const routePath = "";
 
-    const routePath = ''
-    const value = {
-        first: '',
-        second: '',
-        third: ''
-    }
-
-    return (
-        <AppContext.Provider
-            value={{
-                firstName,
-                setFirstName,
-                routePath,
-                value
-            }}>
-            {children}
-        </AppContext.Provider>
-    )
+  return (
+    <AppContext.Provider
+      value={{
+        firstName,
+        setFirstName,
+        routePath,
+        regions,
+        setRegions,
+      }}
+    >
+      {children}
+    </AppContext.Provider>
+  );
 }
