@@ -20,12 +20,12 @@ const PaymentRoute = () => {
           boxShadow: "0 0 10px 0px rgba(0,0,0,0.2)",
         }}
       >
-        <Grid2 container flexDirection={"row"} spacing={2}>
+        <Grid2 sx={{ width:'100%' }} container flexDirection={"row"} spacing={2}>
           <TextField fullWidth label="Name on Card" />
 
           <TextField fullWidth label="Card Number" />
         </Grid2>
-        <Grid2 container flexDirection={"row"} spacing={2}>
+        <Grid2 sx={{ width:'100%'}} container flexDirection={"row"} spacing={2}>
           <TextField fullWidth label="Exp. date" />
 
           <TextField fullWidth label="CVC" />
