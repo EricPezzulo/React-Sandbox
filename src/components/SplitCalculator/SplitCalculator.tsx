@@ -194,6 +194,7 @@ import {
   Grid2,
   MenuItem,
   TextField,
+  Typography,
 } from "@mui/material";
 import { Formik, FormikHelpers, getIn } from "formik";
 import { useState } from "react";
@@ -213,8 +214,8 @@ interface FormValues {
 }
 
 const SplitCalculator = () => {
-  const [splitEvenly, setSplitEvenly] = useState<boolean>(false);
-
+  const [splitEvenly, setSplitEvenly] = useState<boolean>(true);
+  const [displayTotal, setDisplayTotal] = useState([]);
   // Handle form submission
   const handleSubmit = async (
     values: FormValues,
@@ -223,13 +224,23 @@ const SplitCalculator = () => {
     console.log("Form Values:", values);
     const splitRent = Number(values.amountToSplit) / Number(values.waysToSplit);
     const totalAdditional = values.additionalExpensesEnabled
-      ? Number(values.additionalExpenses)
+      ? Number(values.additionalExpenses) / Number(values.waysToSplit)
       : 0;
-    const totalSplit = splitRent + totalAdditional;
 
-    console.log("Split Rent:", splitRent);
-    console.log("Total Additional Expenses:", totalAdditional);
-    console.log("Total Split:", totalSplit);
+    if (splitEvenly) {
+      const total = splitRent + totalAdditional
+      console.log("split evenly total", total)
+    } else {
+      const percentages = values.splits
+      for (let i = 0; i < percentages.length; i++) {
+        const amount = (Number(percentages[i].percentage) * Number(values.amountToSplit) / 100) + totalAdditional
+        console.log(`person${i}:`, amount)
+        setDisplayTotal((prev) => ({
+          ...prev,
+          [`person${i}`]: amount
+        }))
+      }
+    }
     setSubmitting(false); // Reset submitting status
   };
 
@@ -237,25 +248,26 @@ const SplitCalculator = () => {
   const validationSchema = yup.object().shape({
     amountToSplit: yup
       .string()
-      .required("Amount to split is required.")
-      .matches(/^[0-9]+$/, "Amount must be a number."),
+      .required("Amount to split is required."),
+    // .matches(/^[0-9]+$/, "Amount must be a number."),
     waysToSplit: yup
       .string()
-      .required("Ways to split is required.")
-      .matches(/^[0-9]+$/, "Must be a number."),
+      .required("Ways to split is required."),
+    // .matches(/^[0-9]+$/, "Must be a number."),
     additionalExpensesEnabled: yup.boolean(),
     additionalExpenses: yup
       .string()
-      .when(
-        "additionalExpensesEnabled",
-        (additionalExpensesEnabled, schema) => {
-          return additionalExpensesEnabled
-            ? schema
-                .required("Additional expenses are required.")
-                .matches(/^[0-9]+$/, "Must be a number.")
-            : schema;
-        },
-      ),
+      .optional(),
+    // .when(
+    //   "additionalExpensesEnabled",
+    //   (additionalExpensesEnabled, schema) => {
+    //     return additionalExpensesEnabled
+    //       ? schema
+    //         .required("Additional expenses are required.")
+    //         .matches(/^[0-9]+$/, "Must be a number.")
+    //       : schema;
+    //   },
+    // ),
     splits: yup.array().of(
       yup.object().shape({
         percentage: yup
@@ -263,7 +275,8 @@ const SplitCalculator = () => {
           .required("Percentage is required")
           .matches(/^[0-9]+$/, "Must be a number."),
       }),
-    ),
+    )
+      .optional(),
   });
 
   // Initialize form values
@@ -275,8 +288,16 @@ const SplitCalculator = () => {
     splits: Array(2).fill({ percentage: "" }), // Initialize splits based on waysToSplit
   };
 
+  const toggleSplitEvenly = (values: FormValues) => {
+    setSplitEvenly((prev) => !prev)
+    if (!splitEvenly) {
+      values.splits.length = 0
+    }
+  }
+
+  console.log("Display Tota:", displayTotal)
   return (
-    <div className="sm:4/5 flex w-full flex-col rounded-md border border-slate-200 p-3 shadow">
+    <div className="sm:w-4/5 md:w-1/2 flex w-full flex-col rounded-md border border-slate-200 p-3 shadow">
       <Formik<FormValues>
         initialValues={initialValues}
         // validationSchema={validationSchema}
@@ -353,7 +374,7 @@ const SplitCalculator = () => {
                 control={
                   <Checkbox
                     checked={splitEvenly}
-                    onChange={() => setSplitEvenly((prev) => !prev)}
+                    onChange={() => toggleSplitEvenly(values)}
                   />
                 }
               />
@@ -425,6 +446,14 @@ const SplitCalculator = () => {
                 />
               )}
             </Grid2>
+            <Grid2 container flexDirection='column' sx={{ py: 2 }}>
+
+              {Object.entries(displayTotal).map(([key, value]: [key: string, value: number], index) => (
+                <Typography key={index} variant="subtitle1">
+                  Person {index + 1}: {USDollar(value)}
+                </Typography>
+              ))}
+            </Grid2>
             <button
               className="mt-4 rounded bg-slate-100 px-2 py-1 shadow duration-100 ease-in hover:bg-slate-200"
               type="submit"
@@ -440,3 +469,8 @@ const SplitCalculator = () => {
 };
 
 export default SplitCalculator;
+
+const USDollar = new Intl.NumberFormat('en-us', {
+  style: 'currency',
+  currency: "USD"
+}).format
