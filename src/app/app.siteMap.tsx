@@ -10,8 +10,10 @@ import {
   ChildCare,
   FlightClass,
   Home,
+  Kitchen,
   PaymentsOutlined,
 } from "@mui/icons-material";
+import FreeSpaceRoute from "../pages/FreeSpaceRoute";
 
 export type SiteMapType = PathType[];
 
@@ -34,6 +36,11 @@ export const siteMap: SiteMapType = [
     path: "/payment",
     title: "Payment",
     icon: <PaymentsOutlined />,
+  },
+  {
+    path: "/freespace",
+    title: "Free Space",
+    icon: <Kitchen />,
   },
 ];
 
@@ -61,6 +68,10 @@ export const router = createBrowserRouter([
         path: "/payment",
         element: <PaymentRoute />,
         // errorElement: <ErrorRoute />,
+      },
+      {
+        path: "/freespace",
+        element: <FreeSpaceRoute />,
       },
     ],
     errorElement: <ErrorRoute />,
