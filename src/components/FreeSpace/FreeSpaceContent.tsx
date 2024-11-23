@@ -32,6 +32,7 @@ const FreeSpaceContent = () => {
         animate={{ scale, x: xValue, y: yValue, rotate: rotation }}
         transition={{ type: 'spring' }}
         whileInView={{ opacity: 1 }}
+        style={{ x: 160, y: 288 }}
         layout
       >
         <p>Hello world</p>
@@ -72,7 +73,7 @@ const FreeSpaceContent = () => {
           max={5}
           value={scale}
           onChange={(e) => handleChange(e, 'scale')}
-        />{' '}
+        />
       </div>
     </div>
   );
