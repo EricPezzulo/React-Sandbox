@@ -2,8 +2,8 @@ import { motion } from 'motion/react';
 import { ChangeEvent, useState } from 'react';
 
 const FreeSpaceContent = () => {
-  const [xValue, setXValue] = useState<number>(125);
-  const [yValue, setYValue] = useState<number>(125);
+  const [xValue, setXValue] = useState<number>(160);
+  const [yValue, setYValue] = useState<number>(288);
   const [scale, setScale] = useState<number>(1);
   const [rotation, setRotation] = useState<number>(0);
 
@@ -23,11 +23,12 @@ const FreeSpaceContent = () => {
       console.log('scale:', inputValue);
     }
   };
+  console.log(window.visualViewport?.height);
 
   return (
     <div>
       <motion.div
-        className="flex h-12 w-12 items-center justify-center rounded-sm bg-sky-500 text-sm"
+        className="flex h-20 w-20 items-center justify-center rounded-sm border border-dotted border-purple-500 bg-white text-center text-sm"
         animate={{ scale, x: xValue, y: yValue, rotate: rotation }}
         transition={{ type: 'spring' }}
         whileInView={{ opacity: 1 }}
@@ -35,24 +36,25 @@ const FreeSpaceContent = () => {
       >
         <p>Hello world</p>
       </motion.div>
-      <div>
-        <label htmlFor="x-axis">X axies</label>
+
+      <div className="flex">
+        <label htmlFor="x-axis">X-Axies : {xValue}</label>
         <input
           id="x-axis"
           type="range"
-          min={125}
-          max={500}
+          min={160}
+          max={window.visualViewport?.width - 400}
           onChange={(e) => handleChange(e, 'x-axis')}
         />
-        <label htmlFor="y-axis">y axies</label>
+        <label htmlFor="y-axis">Y-Axis: {yValue}</label>
         <input
           id="y-axis"
           type="range"
-          min={125}
-          max={500}
+          min={288}
+          max={window.visualViewport?.height - 200}
           onChange={(e) => handleChange(e, 'y-axis')}
         />
-        <label htmlFor="rotation">rotation</label>
+        <label htmlFor="rotation">Rotation: {rotation}</label>
         <input
           id="rotation"
           type="range"
@@ -61,7 +63,7 @@ const FreeSpaceContent = () => {
           value={rotation}
           onChange={(e) => handleChange(e, 'rotation')}
         />
-        <label htmlFor="scale">scale</label>
+        <label htmlFor="scale">Scale: {scale}</label>
         <input
           id="scale"
           type="range"
@@ -70,13 +72,7 @@ const FreeSpaceContent = () => {
           max={5}
           value={scale}
           onChange={(e) => handleChange(e, 'scale')}
-        />
-      </div>
-      <div className="flex gap-3">
-        <p>X-Axis: {xValue}</p>
-        <p>Y-Axis: {yValue}</p>
-        <p>Rotation: {rotation}</p>
-        <p>Scale: {scale}</p>
+        />{' '}
       </div>
     </div>
   );
