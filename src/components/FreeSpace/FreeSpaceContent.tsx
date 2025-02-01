@@ -43,7 +43,9 @@ const FreeSpaceContent = () => {
           id="x-axis"
           type="range"
           min={160}
-          max={window.visualViewport?.width - 400}
+          max={
+            window.visualViewport?.width && window.visualViewport.width - 400
+          }
           onChange={(e) => handleChange(e, 'x-axis')}
         />
         <label htmlFor="y-axis">Y-Axis: {yValue}</label>
@@ -51,7 +53,9 @@ const FreeSpaceContent = () => {
           id="y-axis"
           type="range"
           min={288}
-          max={window.visualViewport?.height - 200}
+          max={
+            window.visualViewport?.height && window.visualViewport.height - 200
+          }
           onChange={(e) => handleChange(e, 'y-axis')}
         />
         <label htmlFor="rotation">Rotation: {rotation}</label>
